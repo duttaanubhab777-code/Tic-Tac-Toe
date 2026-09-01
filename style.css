@@ -1,0 +1,118 @@
+*{margin:0;
+padding: 0;}
+#tic{
+    color:#ff5e00;
+    margin-top :50px;
+    text-align:center ;
+    font-size :55px;
+    
+}
+body{ 
+    background-color :#00ffea;
+        text-align :center;}
+        
+    .msg-container { margin-top: 200px;
+    color:#ff00f1;
+    
+    
+        
+    }
+    #newBtn{height: 35px;
+       margin-top:20px;
+       cursor :pointer;
+       font-size : 15px;
+       background: #ff00b2;
+       border:none;
+       border-radius :8px;
+       color:white;
+       margin:30px;
+       box-shadow :0 0 15px rgba(0,0,0,1);
+       width: 125px;
+       
+        
+    }
+
+
+.draw-container { margin-top: 200px;
+    color:#ff00f1;
+    
+    
+        
+    }
+    #draw-btn {height: 35px;
+       margin-top:20px;
+       cursor :pointer;
+       font-size : 15px;
+       background: #ff001f;
+       border:none;
+       border-radius :8px;
+       color:white;
+       margin:30px;
+       box-shadow :0 0 15px rgba(0,0,0,1);
+       width: 125px;
+       
+        
+    }
+        
+    
+
+
+.container { display :flex;
+align-items : center;
+justify-content :center;
+margin-top :45px;
+        
+        
+        
+        
+       
+}
+.game{
+
+        height: 360px;
+        width:360px  ;
+        display :flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        align-items:center;
+        gap:9px;
+        
+        
+        
+        
+        
+   }
+   .box{
+           display :flex;
+           align-items :center;
+           justify-content :center;
+           height:100px;
+           width: 100px;
+           font-size :50px;
+           box-shadow :0 0 15px rgba(0,0,0,1);
+           
+           border :none;
+           border-radius :20px;
+           
+           background-color:white;
+           color:red;
+   }
+   
+   #reset{
+       height: 35px;
+       margin-top:20px;
+       cursor :pointer;
+       font-size : 15px;
+       background: #ff8800;
+       border:none;
+       border-radius :8px;
+       color:white;
+       margin:30px;
+       box-shadow :0 0 15px rgba(0,0,0,1);
+       width: 125px;
+       
+   }
+   
+.hide{
+    display :none;
+}
