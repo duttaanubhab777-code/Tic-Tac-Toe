@@ -1,0 +1,33 @@
+{
+    "id": "./",
+    "name": "Arcade Tac – Tic-Tac-Toe",
+    "short_name": "Arcade Tac",
+    "description": "Neon Tic-Tac-Toe with a 5-level computer, series mode and scoreboard. Created by Anubhab Dutta.",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#0b0820",
+    "theme_color": "#1c1247",
+    "categories": ["games"],
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "icons/maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

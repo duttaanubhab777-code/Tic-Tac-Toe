@@ -1,3 +1,4 @@
+/* Tic-Tac-Toe — Created by Anubhab Dutta */
 const $ = s => document.querySelector(s),
     $$ = s => [...document.querySelectorAll(s)];
 const W = [
@@ -15,6 +16,8 @@ let P = {
     names: ["Player 1", "Player 2"],
     p1: "X",
     series: 3,
+    mode: "pvp",
+    level: 3,
     w: [0, 0],
     d: 0,
     live: false,
@@ -42,6 +45,7 @@ const mark = s =>
 let b,
     turn,
     over,
+    tm,
     last = { type: "draw", p: 0 };
 
 /* ---------- sound, vibration, toast, confetti ---------- */
@@ -127,8 +131,16 @@ const show = v => {
 };
 function pv() {
     const s = $("#sy .on").dataset.v,
+        m = $("#md .on").dataset.v,
+        lv = +$("#lv .on").dataset.v,
         n1 = $("#n1").value.trim() || "Player 1",
-        n2 = $("#n2").value.trim() || "Player 2";
+        n2 =
+            m === "cpu"
+                ? `Computer Lv${lv}`
+                : $("#n2").value.trim() || "Player 2";
+    $("#l2").classList.toggle("hide", m === "cpu");
+    $("#lvbox").classList.toggle("hide", m !== "cpu");
+    $("#lvd").textContent = LV[lv - 1];
     $("#pv").textContent =
         `${n1} plays ${s}, ${n2} plays ${s === "X" ? "O" : "X"}`;
 }
@@ -140,6 +152,12 @@ function fillSetup() {
     );
     $$("#sr button").forEach(x =>
         x.classList.toggle("on", +x.dataset.v === P.series)
+    );
+    $$("#md button").forEach(x =>
+        x.classList.toggle("on", x.dataset.v === P.mode)
+    );
+    $$("#lv button").forEach(x =>
+        x.classList.toggle("on", +x.dataset.v === P.level)
     );
     pv();
 }
@@ -157,9 +175,13 @@ $$(".seg").forEach(
 );
 ["#n1", "#n2"].forEach(s => ($(s).oninput = pv));
 $("#start").onclick = () => {
+    P.mode = $("#md .on").dataset.v;
+    P.level = +$("#lv .on").dataset.v;
     P.names = [
         $("#n1").value.trim() || "Player 1",
-        $("#n2").value.trim() || "Player 2"
+        P.mode === "cpu"
+            ? `Computer Lv${P.level}`
+            : $("#n2").value.trim() || "Player 2"
     ];
     P.p1 = $("#sy .on").dataset.v;
     P.series = +$("#sr .on").dataset.v;
@@ -190,6 +212,7 @@ for (let i = 0; i < 9; i++) {
 const cells = () => $$(".cell");
 
 function newMatch() {
+    clearTimeout(tm);
     b = Array(9).fill(null);
     over = false;
     turn = played() % 2; // first move alternates every match
@@ -211,7 +234,16 @@ function turnUI() {
     t.className = "turn";
     void t.offsetWidth;
     t.className = "turn go " + sym(turn).toLowerCase();
-    t.innerHTML = mark(sym(turn)) + `<span>${esc(P.names[turn])}'s turn</span>`;
+    t.innerHTML =
+        mark(sym(turn)) +
+        `<span>${esc(P.names[turn])}${cpu() && turn === 1 ? " is thinking…" : "'s turn"}</span>`;
+    if (cpu() && turn === 1 && !over)
+        tm = setTimeout(
+            () => {
+                if (!over && turn === 1) play(aiMove(), true);
+            },
+            650 + Math.random() * 450
+        ); // computer's turn
 }
 function score(pop) {
     const n = played(),
@@ -226,8 +258,9 @@ function score(pop) {
         )
         .join("");
 }
-function play(i) {
-    if (over || b[i] !== null) return;
+function play(i, ai) {
+    // single entry point for a move (human tap, computer, or a future online opponent)
+    if (over || b[i] !== null || (cpu() && turn === 1 && !ai)) return;
     b[i] = turn;
     const c = cells()[i];
     c.innerHTML = mark(sym(turn));
@@ -284,6 +317,53 @@ function end(type, line) {
     save();
     score(true);
     setTimeout(() => modal(true), type === "win" ? 1400 : 900);
+}
+
+/* ---------- computer opponent (levels 1-5) ---------- */
+const LV = [
+    "Rookie – plays almost at random",
+    "Easy – often misses good moves",
+    "Smart – makes a few slips",
+    "Expert – rarely slips",
+    "Genius – never loses"
+];
+const CHANCE = [1, 0.6, 0.3, 0.1, 0]; // chance of a random (careless) move per level
+const cpu = () => P.mode === "cpu";
+const pick = a => a[(Math.random() * a.length) | 0];
+const winOf = x => {
+    const l = W.find(
+        l => x[l[0]] !== null && x[l[0]] === x[l[1]] && x[l[1]] === x[l[2]]
+    );
+    return l ? x[l[0]] : null;
+};
+function mm(x, pl, me, d) {
+    // minimax: looks at every possible future
+    const w = winOf(x);
+    if (w !== null) return w === me ? 10 - d : d - 10;
+    if (x.every(v => v !== null)) return 0;
+    let best = pl === me ? -99 : 99;
+    for (let i = 0; i < 9; i++)
+        if (x[i] === null) {
+            x[i] = pl;
+            const s = mm(x, 1 - pl, me, d + 1);
+            x[i] = null;
+            best = pl === me ? Math.max(best, s) : Math.min(best, s);
+        }
+    return best;
+}
+function aiMove() {
+    const me = turn,
+        free = b.map((v, i) => (v === null ? i : -1)).filter(i => i >= 0);
+    if (free.length === 9 && P.level > 1) return pick([0, 2, 4, 6, 8]);
+    if (Math.random() < CHANCE[P.level - 1]) return pick(free);
+    const sc = free.map(i => {
+            b[i] = me;
+            const s = mm(b, 1 - me, me, 1);
+            b[i] = null;
+            return s;
+        }),
+        top = Math.max(...sc);
+    return pick(free.filter((_, k) => sc[k] === top));
 }
 
 /* ---------- result modal & share ---------- */
@@ -383,3 +463,26 @@ if (P.live) {
     newMatch();
     if (played() >= P.series) setTimeout(() => modal(true), 500);
 }
+
+/* ---------- PWA: offline + install ---------- */
+if ("serviceWorker" in navigator)
+    addEventListener("load", () =>
+        navigator.serviceWorker.register("sw.js").catch(() => {})
+    );
+let dp;
+addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    dp = e;
+    $("#inst").classList.remove("hide");
+});
+$("#inst").onclick = async () => {
+    if (!dp) return;
+    dp.prompt();
+    await dp.userChoice;
+    dp = null;
+    $("#inst").classList.add("hide");
+};
+addEventListener("appinstalled", () => {
+    $("#inst").classList.add("hide");
+    toast("App installed!");
+});

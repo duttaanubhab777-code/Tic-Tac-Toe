@@ -1,9 +1,21 @@
 <!doctype html>
+<!-- Created by Anubhab Dutta -->
 <html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>Tic-Tac-Toe</title>
+        <title>Arcade Tac – Tic-Tac-Toe</title>
+        <meta
+            name="description"
+            content="Neon Tic-Tac-Toe with a 5-level computer. Created by Anubhab Dutta."
+        />
+        <meta name="theme-color" content="#1c1247" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Arcade Tac" />
+        <link rel="manifest" href="manifest.json" />
+        <link rel="icon" href="icons/favicon.png" />
+        <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -56,6 +68,9 @@
         <header>
             <h1>Tic-Tac-Toe</h1>
             <div class="tools">
+                <button class="ib hide" id="inst" aria-label="Install app">
+                    ⬇️
+                </button>
                 <button class="ib" id="snd" aria-label="Toggle sound">
                     🔊
                 </button>
@@ -71,6 +86,21 @@
 
         <main>
             <section id="setup" class="card">
+                <img
+                    class="hero"
+                    src="icons/icon-192.png"
+                    alt="Arcade Tac arcade machine"
+                    width="88"
+                    height="88"
+                />
+                <p class="lb">Mode</p>
+                <div class="seg" id="md">
+                    <button data-v="pvp" class="on">2 Players</button
+                    ><button data-v="cpu">vs Computer</button
+                    ><button data-v="online" disabled>
+                        Online<small>soon</small>
+                    </button>
+                </div>
                 <label
                     >Player 1<input
                         id="n1"
@@ -78,13 +108,24 @@
                         placeholder="Player 1"
                         autocomplete="off"
                 /></label>
-                <label
+                <label id="l2"
                     >Player 2<input
                         id="n2"
                         maxlength="14"
                         placeholder="Player 2"
                         autocomplete="off"
                 /></label>
+                <div id="lvbox" class="hide">
+                    <p class="lb">Computer level</p>
+                    <div class="seg" id="lv">
+                        <button data-v="1">1</button
+                        ><button data-v="2">2</button
+                        ><button data-v="3" class="on">3</button
+                        ><button data-v="4">4</button
+                        ><button data-v="5">5</button>
+                    </div>
+                    <p id="lvd" class="pv"></p>
+                </div>
                 <p class="lb">Player 1 plays as</p>
                 <div class="seg" id="sy">
                     <button data-v="X" class="on">X</button
@@ -118,6 +159,7 @@
                 </div>
             </section>
         </main>
+        <footer class="cr">Created by <b>Anubhab Dutta</b></footer>
 
         <div id="modal" class="hide">
             <div class="mc">

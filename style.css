@@ -1,3 +1,4 @@
+/* Created by Anubhab Dutta */
 :root {
     --a: #ff4d8d;
     --b: #8b5cf6;
@@ -593,4 +594,66 @@ input:focus-visible {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+.hero {
+    display: block;
+    width: 88px;
+    height: 88px;
+    margin: -4px auto 4px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px -8px var(--b);
+    animation: bn 3s ease-in-out infinite;
+}
+#md button {
+    font-size: 14px;
+    line-height: 1.1;
+}
+.seg button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.seg small {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--m);
+}
+#lv.seg button {
+    padding: 11px 0;
+}
+.cr {
+    margin-top: auto;
+    padding: 26px 0 10px;
+    font-size: 14px;
+    color: var(--m);
+    text-align: center;
+    animation: pop 0.8s 0.3s backwards;
+}
+.cr b {
+    font-weight: 800;
+    background: linear-gradient(
+        90deg,
+        var(--a),
+        var(--d),
+        var(--c),
+        var(--b),
+        var(--a)
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: sh 5s linear infinite;
+    text-shadow: 0 0 18px rgba(139, 92, 246, 0.35);
+}
+.cr::before {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 3px;
+    margin: 0 auto 10px;
+    border-radius: 9px;
+    background: var(--g);
+    opacity: 0.7;
 }
