@@ -1,48 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <link rel ="stylesheet" href="style.css">
-</head>
-<body>
-    <h1 id="tic">Tic-Tac-Toe</h1>
-    <div class ="msg-container hide">
-    <h2  id="msg">🎉 Congratulations 🎉 <br>
-     </h2>
-     <button id="newBtn">
-         New Game
-     </button>
-     </div>
-    <div class="draw-container hide">
-        <h2>The Game Is Draw!!</h2>
-    <br>
-    <button id="draw-btn">
-        New Game
-    </button>
-    </div>
-    
-    <div class="container" >
-        <div class="game">
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        <button class="box"></button>
-        
-        </div>
-        
-    </div>
-    <button id="reset"> Reset Game</button>
-    
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Tic-Tac-Toe</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Hind+Siliguri:wght@500;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="bg"><i></i><i></i><i></i></div>
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <defs>
+                <linearGradient
+                    id="gx"
+                    gradientUnits="userSpaceOnUse"
+                    x1="0"
+                    y1="0"
+                    x2="100"
+                    y2="100"
+                >
+                    <stop offset="0" stop-color="#ff4d8d" />
+                    <stop offset="1" stop-color="#ffb347" />
+                </linearGradient>
+                <linearGradient
+                    id="go"
+                    gradientUnits="userSpaceOnUse"
+                    x1="0"
+                    y1="0"
+                    x2="100"
+                    y2="100"
+                >
+                    <stop offset="0" stop-color="#22d3ee" />
+                    <stop offset="1" stop-color="#8b5cf6" />
+                </linearGradient>
+                <linearGradient
+                    id="gw"
+                    gradientUnits="userSpaceOnUse"
+                    x1="0"
+                    y1="0"
+                    x2="100"
+                    y2="100"
+                >
+                    <stop offset="0" stop-color="#ff4d8d" />
+                    <stop offset=".5" stop-color="#8b5cf6" />
+                    <stop offset="1" stop-color="#22d3ee" />
+                </linearGradient>
+            </defs>
+        </svg>
 
-   
-<script src="app.js">
-</script>
-</body>
+        <header>
+            <h1>Tic-Tac-Toe</h1>
+            <div class="tools">
+                <button class="ib" id="snd" aria-label="Toggle sound">
+                    🔊
+                </button>
+                <button
+                    class="ib"
+                    id="theme"
+                    aria-label="Toggle dark and light mode"
+                >
+                    ☀️
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section id="setup" class="card">
+                <label
+                    >Player 1<input
+                        id="n1"
+                        maxlength="14"
+                        placeholder="Player 1"
+                        autocomplete="off"
+                /></label>
+                <label
+                    >Player 2<input
+                        id="n2"
+                        maxlength="14"
+                        placeholder="Player 2"
+                        autocomplete="off"
+                /></label>
+                <p class="lb">Player 1 plays as</p>
+                <div class="seg" id="sy">
+                    <button data-v="X" class="on">X</button
+                    ><button data-v="O">O</button>
+                </div>
+                <p id="pv" class="pv"></p>
+                <p class="lb">Series length (matches)</p>
+                <div class="seg" id="sr">
+                    <button data-v="1">1</button
+                    ><button data-v="3" class="on">3</button
+                    ><button data-v="5">5</button><button data-v="7">7</button>
+                </div>
+                <button class="btn" id="start">Start game</button>
+            </section>
+
+            <section id="game" class="card hide">
+                <div class="mh">
+                    <span id="mn"></span>
+                    <div class="pbar"><i id="pb"></i></div>
+                </div>
+                <div id="sc" class="sc"></div>
+                <div id="turn" class="turn"></div>
+                <div class="board new" id="bd">
+                    <svg class="wl" id="wl" viewBox="0 0 100 100">
+                        <line id="wln" pathLength="1" />
+                    </svg>
+                </div>
+                <div class="row">
+                    <button class="btn ghost" id="rs">Restart match</button>
+                    <button class="btn ghost" id="st">New series</button>
+                </div>
+            </section>
+        </main>
+
+        <div id="modal" class="hide">
+            <div class="mc">
+                <div id="mi"></div>
+                <h2 id="mt"></h2>
+                <p id="ms"></p>
+                <div id="mb" class="col"></div>
+            </div>
+        </div>
+        <div id="toast"></div>
+        <canvas id="fx"></canvas>
+        <script src="app.js"></script>
+    </body>
 </html>
